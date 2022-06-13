@@ -1,0 +1,21 @@
+execution:
+#- executor: jmeter
+- concurrency: 1
+  ramp-up: 1s
+  hold-for: 2m
+  scenario: Reports_Tab_Api's
+
+scenarios:
+  Reports_Tab_Api's:
+    script: Reports_Tab_Api's.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

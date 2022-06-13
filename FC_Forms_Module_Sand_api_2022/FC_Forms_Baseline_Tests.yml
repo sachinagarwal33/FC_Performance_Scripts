@@ -1,0 +1,33 @@
+execution:
+#- executor: jmeter
+- concurrency: 140
+  ramp-up: 140s
+  hold-for: 55m
+  scenario: SC01_Get_Form_Instances
+- concurrency: 60
+  ramp-up: 60s
+  hold-for: 55m
+  scenario: SC02_Get_One_Batch_Status_6
+- concurrency: 20
+  ramp-up: 20s
+  hold-for: 55m
+  scenario: S03_Get_Form_Packet_2
+
+scenarios:
+  SC01_Get_Form_Instances:
+    script: SC01_Get_Form_Instances.jmx
+  SC02_Get_One_Batch_Status_6:
+    script: SC02_Get_One_Batch_Status_6.jmx
+  S03_Get_Form_Packet_2:
+    script: S03_Get_Form_Packet_2.jmx 
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

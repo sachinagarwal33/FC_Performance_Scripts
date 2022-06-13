@@ -1,0 +1,21 @@
+execution:
+#- executor: jmeter
+- concurrency: 50
+  ramp-up: 50s
+  hold-for: 60m
+  scenario: Sand_permissions_API_22_07_2021
+
+scenarios:
+  Sand_permissions_API_22_07_2021:
+    script: Sand_permissions_API_22_07_2021.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

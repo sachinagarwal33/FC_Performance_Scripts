@@ -1,0 +1,33 @@
+execution:
+#- executor: jmeter
+- concurrency: 250
+  ramp-up: 250s
+  hold-for: 55m
+  scenario: SC01_Get_Employee_Details
+  - concurrency: 75
+  ramp-up: 75s
+  hold-for: 55m
+  scenario: SC02_Get_Employee_Credentials
+  - concurrency: 30
+  ramp-up: 30s
+  hold-for: 55m
+  scenario: SC03_Get_Employees_Position_7
+
+scenarios:
+  SC01_Get_Employee_Details:
+    script: SC01_Get_Employee_Details.jmx
+  SC02_Get_Employee_Credentials:
+    script: SC02_Get_Employee_Credentials.jmx
+  SC03_Get_Employees_Position_7:
+    script: SC03_Get_Employees_Position_7.jmx   
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

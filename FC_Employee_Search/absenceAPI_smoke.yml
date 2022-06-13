@@ -1,0 +1,21 @@
+execution:
+#- executor: jmeter
+- concurrency: 20
+  ramp-up: 20s
+  hold-for: 30m
+  scenario: absence_API
+
+scenarios:
+  absence_API:
+    script: Key_Bussiness_impacted_APIS.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

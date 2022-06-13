@@ -1,0 +1,27 @@
+execution:
+#- executor: jmeter
+- concurrency: 1
+  ramp-up: 1s
+  hold-for: 1m
+  scenario: Login_Thread_Group
+- concurrency: 25
+  ramp-up: 25s
+  hold-for: 60m
+  scenario: Employee_Positions_Thread_Group
+
+scenarios:
+  Login_Thread_Group:
+    script: Employee_Positions.jmx
+  Employee_Positions_Thread_Group:
+    script: Employee_Positions.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

@@ -1,0 +1,27 @@
+execution:
+#- executor: jmeter
+- concurrency: 200
+  ramp-up: 200s
+  hold-for: 55ms
+  scenario: SC01_Get_All_Job_Types
+- concurrency: 100
+  ramp-up: 100s
+  hold-for: 55m
+  scenario: SC02_Get_Job_Type
+
+scenarios:
+  SC01_Get_All_Job_Types:
+    script: SC01_Get_All_Job_Types.jmx
+  SC02_Get_Job_Type:
+    script: SC02_Get_Job_Type.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

@@ -1,0 +1,21 @@
+execution:
+#- executor: jmeter
+- concurrency: 2
+  ramp-up: 2s
+  hold-for: 1m
+  scenario: Modify Employee
+
+scenarios:
+  Modify Employee:
+    script: SC01_Modify_Employee_Api.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed

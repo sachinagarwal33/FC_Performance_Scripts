@@ -1,0 +1,21 @@
+execution:
+#- executor: jmeter
+- concurrency: 250
+  ramp-up: 250s
+  hold-for: 55m
+  scenario: Locations_Service_Sand
+
+scenarios:
+  Locations_Service_Sand:
+    script: Locations_Service_Sand.jmx
+
+modules:
+  console:
+    disable: true # disable runtime console reporter
+
+reporting:
+#- module: console
+- module: passfail
+  criteria:
+  - avg-rt>10s for 30s, stop as failed
+  - fail>50% for 20s, stop as failed
